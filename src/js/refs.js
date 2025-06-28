@@ -1,5 +1,6 @@
 //Обʼєкт з посиланнями на ДОМ елементи
 
 export const refs = {
-    categoryList: document.querySelector(".categories")
+    categoryList: document.querySelector(".categories"),
+    productList: document.querySelector(".products")
 };
