@@ -12,7 +12,7 @@
 
   background: rgba(0, 0, 0, 0.5);
 
-  &.modal--is-open {
+  &.modal--is--open {
     display: flex;
   }
 }

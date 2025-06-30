@@ -10,8 +10,7 @@ export async function getCategories() {
         return data; 
     } catch (error) {
         iziToast.error({ message: error.message,position:"topRight"})
-    }
-    
+    } 
 } 
 
 export async function getProducts(currentPage) {
@@ -28,6 +27,31 @@ export async function getProducts(currentPage) {
 export async function getProductsToCategory(currentCategorie) {
     const url = `products/category/${currentCategorie}`;
     try {
+        const { data } = await axios(url);        
+        return data;  
+        
+    } catch (error) {
+        iziToast.error({ message: error.message,position:"topRight"})
+    }
+    
+}
+
+
+export async function getProductsById(id) {
+    const url = `products/${id}`;
+    try {
+        const { data } = await axios(url);        
+        return data;  
+        
+    } catch (error) {
+        iziToast.error({ message: error.message,position:"topRight"})
+    }
+    
+}
+
+export async function getProductsByValue(value, currentPage = 1, limit = 12) {
+    const skip = (currentPage - 1) * 12;
+    const url = `products/search?q=${encodeURIComponent(value)}&limit=${limit}&skip=${skip}`;    try {
         const { data } = await axios(url);        
         return data;  
         

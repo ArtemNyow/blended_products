@@ -17,6 +17,8 @@ export const renderCategories = async () => {
     const categoriesArr = await getCategories();
     categoriesArr.unshift({ name: 'All' });
     refs.categoryList.insertAdjacentHTML('beforeend', markupCategories(categoriesArr))
+    
+    
 }
 
 export const markupProducts = products => {
@@ -33,6 +35,44 @@ export const markupProducts = products => {
 };
 
 export const renderProducts = async currentPage => {
-    const {products} = await getProducts(currentPage);
-    refs.productList.insertAdjacentHTML('beforeend', markupProducts(products))
+    const { products } = await getProducts(currentPage);
+    if (products.length > 0) {
+        refs.productList.insertAdjacentHTML('beforeend', markupProducts(products))
+    } 
+}
+export function renderProductToCategory(products) {
+    refs.productList.innerHTML = markupProducts(products);
+  }
+
+export function showNoProductsMessage() {
+    refs.notFound.classList.add("not-found--visible");
+  }
+  
+  export function hideNoProductsMessage() {
+    refs.notFound.classList.remove("not-found--visible");
+}
+  
+
+
+
+export function markupProductsModal ({
+  thumbnail, title, price, tags =[], description, returnPolicy, shippingInformation
+})  {
+
+  const tagItems = tags.map(tag => `<li>${tag}</li>`).join('');  return `<img class="modal-product__img" src="${thumbnail}" alt="${title}" />
+      <div class="modal-product__content">
+        <p class="modal-product__title">${title}</p>
+        <ul class="modal-product__tags">${tagItems}</ul>
+        <p class="modal-product__description">${description}</p>
+        <p class="modal-product__shipping-information">Shipping: ${shippingInformation}</p>
+        <p class="modal-product__return-policy">Return Policy: ${returnPolicy}</p>
+        <p class="modal-product__price">Price: ${price} $</p>
+        <button class="modal-product__buy-btn" type="button">Buy</button>
+      </div>`
+};
+
+
+export function renderProductsModal(product) {
+      refs.modalProduct.innerHTML = "";
+      refs.modalProduct.insertAdjacentHTML('beforeend', markupProductsModal(product))
 }
