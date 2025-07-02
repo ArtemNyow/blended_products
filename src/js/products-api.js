@@ -46,7 +46,6 @@ export async function getProductsById(id) {
     } catch (error) {
         iziToast.error({ message: error.message,position:"topRight"})
     }
-    
 }
 
 export async function getProductsByValue(value, currentPage = 1, limit = 12) {

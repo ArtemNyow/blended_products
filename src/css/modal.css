@@ -161,6 +161,17 @@
   transition: all 0.3s ease;
 }
 
+.modal-product__btn--buy {
+  background: #727272;
+  color: white;
+}
+
+.modal-product__btn--buy:hover {
+  background: #727272;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 99, 99, 0.2);
+}
+
 .modal-product__btn--cart {
   background: #ff6b0a;
   color: white;
@@ -192,6 +203,10 @@
   height: 20px;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.modal-product__btn--buy::before {
+  content: inherit;
 }
 
 .modal-product__btn--cart::before {

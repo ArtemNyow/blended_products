@@ -67,7 +67,7 @@ export function markupProductsModal ({
         <p class="modal-product__shipping-information">Shipping: ${shippingInformation}</p>
         <p class="modal-product__return-policy">Return Policy: ${returnPolicy}</p>
         <p class="modal-product__price">Price: ${price} $</p>
-        <button class="modal-product__buy-btn" type="button">Buy</button>
+        <button class="modal-product__btn modal-product__btn--buy" type="button">Buy</button>
       </div>`
 };
 

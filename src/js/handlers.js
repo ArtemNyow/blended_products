@@ -3,9 +3,9 @@
 import iziToast from "izitoast";
 import { refs } from "./refs";
 import { getProducts, getProductsById, getProductsByValue, getProductsToCategory } from "./products-api";
-import { hideNoProductsMessage, markupProducts, markupProductsModal, renderProductsModal, renderProductToCategory, showNoProductsMessage } from "./render-function";
+import { hideNoProductsMessage, renderProductsModal, renderProductToCategory, showNoProductsMessage } from "./render-function";
 import { setActiveCategoryButton } from "./helpers";
-import { openModal } from "./modal";
+import { initModalCartButton, initModalWishlistButton, openModal } from "./modal";
 
 
 export async function handleCategoryClick(event) {
@@ -16,7 +16,8 @@ export async function handleCategoryClick(event) {
     
     const categoryName = button.textContent.trim();
     refs.productList.innerHTML = '';
-    hideNoProductsMessage();
+  hideNoProductsMessage();
+  refs.loader.classList.add('active'); 
     try {
       let data;
         if (categoryName.toLowerCase() === 'all') {
@@ -31,6 +32,8 @@ export async function handleCategoryClick(event) {
       }
     } catch (error) {
         iziToast.error({ message: error.message, position: "topRight" });
+    }finally {
+      refs.loader.classList.remove('active');  
     }
   }
   
@@ -38,16 +41,20 @@ export async function handleProductClick(event){
   const productId = event.target.closest('.products__item');
   if (!productId) return;
   const id = productId.getAttribute("data-id");
-
+  refs.loader.classList.add('active'); 
   try {
     const product = await getProductsById(id)
     renderProductsModal(product);
     openModal();
+    initModalCartButton(id);
+    initModalWishlistButton(id);
     return;
     
  } catch (error) {
   iziToast.error({ message: error.message, position: "topRight" });
- }
+ }finally {
+  refs.loader.classList.remove('active');  
+}
 }
 
 export async function searchSubmit(event) {
@@ -59,6 +66,8 @@ export async function searchSubmit(event) {
   refs.productList.innerHTML = '';
   hideNoProductsMessage()
 
+  
+  refs.loader.classList.add('active');  
   try {
     const data = await getProductsByValue(query);
     if (data.products.length > 0) {
@@ -68,6 +77,8 @@ export async function searchSubmit(event) {
     }
   } catch (error) {
     iziToast.error({ message: error.message, position: "topRight" })
+  }finally {
+    refs.loader.classList.remove('active');  
   }
 }
 export async function clearSearch() {
@@ -75,6 +86,8 @@ export async function clearSearch() {
   refs.searchInput.value=""
   refs.productList.innerHTML = ""
   hideNoProductsMessage();
+
+  refs.loader.classList.add('active');  
   try {
     const data = await getProducts(1);
     if (data && Array.isArray(data.products) && data.products.length > 0) {
@@ -84,6 +97,8 @@ export async function clearSearch() {
     }
   } catch (error) {
     iziToast.error({ message: error.message, position: "topRight" });
+  }finally {
+    refs.loader.classList.remove('active');  
   }
 }
 
